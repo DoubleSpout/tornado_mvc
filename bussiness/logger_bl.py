@@ -2,8 +2,8 @@
 import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
-from tornado import options
-
+from tornado.options import define, options
+import time
 
 #创建log目录
 def mkdir(path):
@@ -35,13 +35,31 @@ def mkdir(path):
 logsPath = os.path.join(options.base_dirname,'logs')
 mkdir(logsPath)
 
-
 #设置logger模块
 log = logging.getLogger('mylogger')
-log.setLevel(logging.DEBUG)
-fh = logging.FileHandler( os.path.join(options.base_dirname,'logs',options.logger_name))
-fh.setLevel(logging.DEBUG)
+if options.env == 'Debug':
+    log.setLevel(logging.DEBUG)
+else:
+    log.setLevel(logging.INFO)
+
+#定义格式
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-fh.setFormatter(formatter)
-log.addHandler(fh)
+#定义文件名
+loggerFileName = options.base_dirname+os.sep+'logs'+os.sep+options.logger_name
+
+if options.sep_logger:
+    #定义根据日期分割日志
+    fileTimeHandler = TimedRotatingFileHandler(loggerFileName, "h", 1, 30)
+    fileTimeHandler.suffix = "%Y%m%d"
+    fileTimeHandler.setFormatter(formatter)
+    log.addHandler(fileTimeHandler)
+else:
+    #不根据日期分割日志
+    fh = logging.FileHandler(loggerFileName)
+    fh.setFormatter(formatter)
+    log.addHandler(fh)
+
+
+
+
 log.info('log start in {0}'.format(options.env))

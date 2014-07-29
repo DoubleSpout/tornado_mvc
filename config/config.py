@@ -39,5 +39,7 @@ define("xsrf_cookies", default=configDict['xsrf_cookies'], type=bool)
 define("cookie_secret", default=configDict['cookie_secret'], type=str)
 define('base_dirname', default=baseDirname,  type=str)
 define('login_url', default=configDict['login_url'], type=str)
+define('logger_name', default=configDict['logger_name'], type=str)
+define('sep_logger', default=configDict['sep_logger'], type=str)
 
 sys.path.append(baseDirname)

@@ -14,8 +14,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
-import config.config
+from config import config
 import model
+from bussiness import logger_bl
 import route
 
 
