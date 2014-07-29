@@ -1,0 +1,11 @@
+{
+    "port":8888,
+    "is_debug":true,
+    "db_path":"mysql://root:@192.168.150.3/test",
+    "cookie_secret":"apphello",
+    "xsrf_cookies":true,
+    "login_url":"/login",
+    "template_path":"templates",
+    "static_path":"static",
+    "logger_name":"app.log"
+}
